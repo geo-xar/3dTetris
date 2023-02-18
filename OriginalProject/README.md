@@ -34,7 +34,7 @@ The game contains an easter egg...
  - `c`       -> rotate volume y axis
  - `v`       -> rotate volume z axis
 
-## Executable
+## Pre-built executable
 
 Pre-built executable is compiled for Windows platform.
 It utilises `glut32.dll` shipped together.
@@ -59,3 +59,9 @@ Honestly a lot more might exist as this game was only tested manually...
 
 Please note that `glut32.dll` is expected to be
 in the same directory where the executable is.
+
+## Build the project
+
+ - Install python from [here](https://www.python.org/downloads/)
+ - Install conan by executing: `pip install conan`
+ - Generate and build the project by executing: `python CreateCMakeBuildDirectory.py`
