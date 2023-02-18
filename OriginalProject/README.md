@@ -1,4 +1,4 @@
-# 3dTetris
+# 3dTetris - Original project
 
 ## Intro
 
