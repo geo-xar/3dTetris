@@ -30,3 +30,26 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio
+.vs/
+x64/
+
+# CLion
+.idea
+
+# Build
+cmake-build-debug/
+build/
+BuildDebug/
+BuildRelease/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
+# Coverage
+Coverage/
+CoverageReport*
+LastCoverageResults.log

@@ -1,0 +1,6 @@
+[requires]
+gtest/1.13.0
+freeglut/3.2.2
+
+[generators]
+cmake

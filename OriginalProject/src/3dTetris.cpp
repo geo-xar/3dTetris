@@ -9,16 +9,25 @@ Nikou Dimitrios
 #include <math.h>
 #include <list>
 #include <time.h>
-#include <GL/gl.h>     
-#include <GL/glu.h>   
-#include <GL/glut.h>  
+
+#ifdef _WIN32 || WIN32
+  #include <windows.h>
+  #pragma comment(lib, "winmm.lib")
+#endif
+
+#pragma warning(push, 0)
+  #include <GL/gl.h>
+  #include <GL/glu.h>
+  #include <GL/glut.h>
+#pragma warning(pop)
+
 using namespace std;
 
 #define N 15 // grid size
 
 #define LEFT_COLUMN 1
 #define MIDDLE_COLUMN 2
-#define RIGHT_COLUMN 3     // volume limits inside grid
+#define RIGHT_COLUMN 3 // volume limits inside grid
 #define BACK_COLUMN 4
 #define KENTRO_COLUMN 5
 #define FRONT_COLUMN 6
@@ -1859,7 +1868,7 @@ break;
 }
 }
 
-main(int argc, char **argv) {
+int main(int argc, char **argv) {
 
 glutInit(&argc, argv); // init GLUT and create window
 glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
