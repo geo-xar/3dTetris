@@ -84,7 +84,19 @@ def main():
 
     chdir(f"{build_directory}")
 
-    conan_setup = f"conan install --profile default --build=missing -s build_type={cmd_line_arg_parser.get_config()} ../"
+    conan_setup = 'conan install --profile'
+
+    if cmd_line_arg_parser.get_compiler().lower() == 'clang':
+        conan_setup = conan_setup + ' ../conan_profiles/clang.txt'
+    else:
+        conan_setup = conan_setup + ' default'
+
+    if platform == 'linux' or platform == 'linux2':
+        conan_setup = conan_setup + ' -s os=Linux'
+    else:
+        conan_setup = conan_setup + ' -s os=Windows'
+
+    conan_setup = conan_setup + f" --build=missing -s build_type={cmd_line_arg_parser.get_config()} ../"
 
     system(conan_setup)
 
