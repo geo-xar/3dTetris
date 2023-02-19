@@ -84,7 +84,7 @@ def main():
 
     chdir(f"{build_directory}")
 
-    conan_setup = "conan install --profile default --build=missing ../"
+    conan_setup = f"conan install --profile default --build=missing -s build_type={cmd_line_arg_parser.get_config()} ../"
 
     system(conan_setup)
 
