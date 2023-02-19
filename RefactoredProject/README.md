@@ -10,3 +10,8 @@ using modern C++ and introducing unit tests.
  - Install python from [here](https://www.python.org/downloads/)
  - Install conan by executing: `pip install conan`
  - Generate and build the project by executing: `python CreateCMakeBuildDirectory.py`
+
+## Actions
+
+ - [ ] Create basic components class diagram
+ - [ ] Create basic sequence diagram
