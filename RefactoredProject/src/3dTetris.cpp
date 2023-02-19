@@ -10,16 +10,14 @@ Nikou Dimitrios
 #include <list>
 #include <time.h>
 
-#ifdef _WIN32 || WIN32
+#ifdef _WIN32
   #include <windows.h>
   #pragma comment(lib, "winmm.lib")
 #endif
 
-#pragma warning(push, 0)
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-  #include <GL/glut.h>
-#pragma warning(pop)
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
 using namespace std;
 
@@ -248,7 +246,7 @@ bool reached=false;
 
 // coordinates of the cubes of a volume
 void fix_syn_table(float syn_xx,float syn_yy,float syn_zz){
-	int i,j,counter=0,c=0;
+	int i,counter=0,c=0;
 
 		while(counter!=3){
 			for(i=(0+c);i<(3+c);i++){
@@ -412,10 +410,9 @@ void check_aroundX(int choice){
 
 void check_aroundY(){
 	float x1,y1,z1;
-	int i,t1,t2,t3;
+	int i;
 	int c = label_counter;
 	int areyou=0;
-	float tempyy =syn_y-1;
 	
 	if(temp_color==YELLOW){		
 			for(i=0; i<27; i++){
@@ -625,7 +622,6 @@ void open_lights(void)
 	glLightfv(GL_LIGHT3, GL_POSITION, lightPosition3);
 
 	// Set material properties
-	GLfloat qaBlack[] = {0.5, 0.5, 0.5, 1.0};
 	GLfloat qaGreen[] = {0.0, 1.0, 0.0, 1.0};
 	GLfloat qaWhite[] = {1.0, 1.0, 1.0, 1.0};
 	glMaterialfv(GL_FRONT, GL_AMBIENT, qaGreen);
@@ -759,7 +755,7 @@ void Create_Shape(){
 
 	Shape A;
 
-	int i,j,first_cube,k ,size,tr;
+	int i,j,size;
 
 	label_counter++;
 
@@ -1264,7 +1260,7 @@ void easter_egg_light(){
 
 void easter_egg_draw(){
 	iter=shapelist.begin();
-	for(iter; iter!=--shapelist.end();iter++){
+	for(; iter!=--shapelist.end();iter++){
 		redraw( (iter->retX()), (iter->retY()), (iter->retZ()) , (iter->retlabel()) ,GREEN);
 	}					
 	
@@ -1358,7 +1354,7 @@ else{
 		}//end game over if
 			if(easter_egg==false){
 				iter2=cubelist.begin();
-				for(iter2; iter2!=cubelist.end();iter2++){
+				for(; iter2!=cubelist.end();iter2++){
 					element_cube( (iter2->retX()), (iter2->retY()), (iter2->retZ()) ,(iter2->retcolor()));
 				}					
 				redraw(syn_x,syn_y,syn_z,label_counter,temp_color);
@@ -1418,7 +1414,7 @@ else{
 		}//end game over if
 			if(easter_egg==false){
 				iter2=cubelist.begin();
-				for(iter2; iter2!=cubelist.end();iter2++){
+				for(; iter2!=cubelist.end();iter2++){
 					element_cube( (iter2->retX()), (iter2->retY()), (iter2->retZ()) ,(iter2->retcolor()));
 				}					
 				redraw(syn_x,syn_y,syn_z,label_counter,temp_color);
@@ -1475,7 +1471,7 @@ else{
 		}//end game over if
 			if(easter_egg==false){
 				iter2=cubelist.begin();
-				for(iter2; iter2!=cubelist.end();iter2++){
+				for(; iter2!=cubelist.end();iter2++){
 					element_cube( (iter2->retX()), (iter2->retY()), (iter2->retZ()) ,(iter2->retcolor()));
 				}					
 				redraw(syn_x,syn_y,syn_z,label_counter,temp_color);
@@ -1620,7 +1616,7 @@ gluPerspective(45.0f, ratio, 0.1f, 100.0f); // Set the correct perspective.
 glMatrixMode(GL_MODELVIEW); // Get Back to the Modelview
 }
 
-void processNormalKeys(unsigned char key, int xx, int yy) {
+void processNormalKeys(unsigned char key, int, int) {
 
 if (key == 27){
 	exit(0);
@@ -1791,7 +1787,7 @@ else if(key == 45){	//  -
 }
 }
 
-void processSpecialKeys(int key, int xx, int yy) {
+void processSpecialKeys(int key, int, int) {
 
 if(game_over==false){		
 

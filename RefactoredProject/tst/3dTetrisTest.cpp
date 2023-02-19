@@ -2,7 +2,7 @@
 
 TEST(dummy, 3dTetrisTests)
 {
-    ASSERT_TRUE(true);	
+
 }
 
 int main(int argc, char** argv)
