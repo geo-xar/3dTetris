@@ -18,4 +18,4 @@ using modern C++ and introducing unit tests.
 
 ## Class diagram
 
-![](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/geo-xar/3dTetris/blob/main/RefactoredProject/Design.md)
+![](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/geo-xar/3dTetris/blob/main/RefactoredProject/Design.iuml)
