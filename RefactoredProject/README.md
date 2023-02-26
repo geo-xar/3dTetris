@@ -18,8 +18,9 @@ using modern C++ and introducing unit tests.
 
 ## Class diagram
 
+<div hidden>
 ```
-@startuml
+@startuml classDiagram
 
 class Game {
     +void start()
@@ -107,3 +108,6 @@ Mouse --|> Input
 
 @enduml
 ```
+</div>
+
+![](classDiagram.svg)
