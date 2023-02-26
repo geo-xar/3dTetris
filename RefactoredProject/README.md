@@ -13,7 +13,7 @@ using modern C++ and introducing unit tests.
 
 ## Actions
 
- - [ ] Create basic components class diagram
+ - [X] Create basic components class diagram
  - [ ] Create basic sequence diagram
 
 ## Class diagram
