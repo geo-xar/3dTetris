@@ -1,5 +1,4 @@
-
-@startuml
+@startuml 3dTetris
 
 class Game {
     +void start()
