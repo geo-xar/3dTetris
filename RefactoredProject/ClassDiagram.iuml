@@ -37,11 +37,12 @@ class Cube {
 
 class Controller {
     -VolumeRandomGenerator _generator
-    -LigthSourceFactory _lsFactory
     -std::vector<Volume> _volumes
-    -Grid _grid
+    -LigthSourceFactory _lsFactory
     -std::vector<ILigthSource> _ligthSources
+    -CameraFactory _camFactory
     -std::vector<ICamera> _cameras
+    -Grid _grid
 }
 
 interface ILigthSource
