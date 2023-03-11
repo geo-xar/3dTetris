@@ -84,15 +84,17 @@ def main():
 
     chdir(f"{build_directory}")
 
-    conan_setup = 'conan install --profile'
+    conan_setup = 'conan install -s arch=x86_64'
 
     if cmd_line_arg_parser.get_compiler().lower() == 'clang':
-        conan_setup = conan_setup + ' ../conan_profiles/clang.txt'
+        conan_setup = conan_setup + ' -s compiler=clang -s compiler.version=15'
+        if platform == 'linux' or platform == 'linux2':
+            conan_setup = conan_setup + ' -e CC=/usr/bin/clang -e CXX=/usr/bin/clang++'
     else:
-        conan_setup = conan_setup + ' default'
+        conan_setup = conan_setup + ' --profile default'
 
     if platform == 'linux' or platform == 'linux2':
-        conan_setup = conan_setup + ' -s os=Linux'
+        conan_setup = conan_setup + ' -s os=Linux -s compiler.libcxx=libstdc++11'
     else:
         conan_setup = conan_setup + ' -s os=Windows'
 
