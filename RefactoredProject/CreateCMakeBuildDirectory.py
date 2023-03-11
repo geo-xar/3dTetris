@@ -58,6 +58,9 @@ def main():
     cmd_line_arg_parser = CmdLineArgParser()
     cmd_line_arg_parser.parse()
 
+    if cmd_line_arg_parser.get_compiler().lower() == 'clang' and platform == 'win32':
+        exit(f"clang is not supported on Windows")
+
     build_directory = 'Build' + cmd_line_arg_parser.get_config()
     build_directory_exists = False
 
