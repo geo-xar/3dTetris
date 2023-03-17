@@ -5,5 +5,5 @@
 class LoggerFactory final
 {
 public:
-    static ILoggerPtrU createLogger();
+    [[nodiscard]] static ILoggerPtrU createLogger();
 };
