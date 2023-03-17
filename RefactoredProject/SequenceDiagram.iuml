@@ -1,0 +1,46 @@
+@startuml
+actor Actor
+
+Game -> Logger: Run
+Game -> Controller: Create
+Controller -> Grid: Create
+Controller -> Camera: Create
+Controller -> LightSource : Create
+Controller -> VolumeRandomGenerator: Create
+
+Actor -> Game: Stop
+Game -> Controller: Stop
+Controller -> VolumeRandomGenerator: Stop
+VolumeRandomGenerator -> Grid: Clear grid
+
+Actor -> Game: Start
+alt game is running
+    Game -> Controller: Stop
+end
+Game -> Controller: Start
+Controller -> VolumeRandomGenerator: Start
+VolumeRandomGenerator -> Grid: Visualise volumes
+
+Actor -> Game: Pause
+alt game is running
+    Game -> Controller: Pause
+    Controller -> VolumeRandomGenerator: Pause
+    VolumeRandomGenerator -> Grid: Pause visualisation
+end
+
+Actor -> Game: Show help
+alt game is running
+    Game -> Controller: Pause
+end
+Game -> Game: Show help
+
+Actor -> Game: Close help
+Game -> Game: Close help
+alt game is paused
+    Game -> Controller: Start
+end
+
+Actor -> Game: Move/Switch camera
+Game -> Controller: Move/Switch camera
+Controller-> Camera: Move/Switch
+@enduml

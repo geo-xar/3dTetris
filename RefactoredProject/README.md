@@ -14,8 +14,13 @@ using modern C++ and introducing unit tests.
 ## Actions
 
  - [X] Create basic components class diagram
- - [ ] Create basic sequence diagram
+ - [X] Create basic sequence diagram
+ - [ ] Create Game class and tests
 
 ## Class diagram
 
 ![](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/geo-xar/3dTetris/main/RefactoredProject/ClassDiagram.iuml)
+
+## Sequence diagram
+
+![](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/geo-xar/3dTetris/main/RefactoredProject/SequenceDiagram.iuml)
