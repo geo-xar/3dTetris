@@ -9,9 +9,11 @@ add_library(logger STATIC)
 target_sources(logger
   PUBLIC
     include/ILogger.h
+    include/LoggerFactory.h
   PRIVATE
     Logger.h
     Logger.cpp
+    LoggerFactory.cpp
 )
 
 target_include_directories(logger

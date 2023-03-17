@@ -1,15 +1,13 @@
 #pragma once
 
 #include "ILogger.h"
-#include <ostream>
+#include <sstream>
 
 class Logger final : public ILogger
 {
 public:
-    Logger() = default;
-
     void log(std::string_view entry) override;
 
 private:
-    std::ostream _output;
+    std::stringstream _output{};
 };
