@@ -8,8 +8,10 @@ using modern C++ and introducing unit tests.
 ## Build the project
 
  - Install python from [here](https://www.python.org/downloads/)
- - Install conan by executing: `pip install conan`
+ - Install conan by executing: `pip install conan==1.55.0`
  - Generate and build the project by executing: `python CreateCMakeBuildDirectory.py`
+ - Tested on Windows 10
+ - Tested on Fedora 37, GCC 12, CLANG 15
 
 ## Actions
 

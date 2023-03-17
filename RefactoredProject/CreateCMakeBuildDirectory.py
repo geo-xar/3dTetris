@@ -97,7 +97,7 @@ def main():
         conan_setup = conan_setup + ' --profile default'
 
     if platform == 'linux' or platform == 'linux2':
-        conan_setup = conan_setup + ' -s os=Linux -s compiler.libcxx=libstdc++11'
+        conan_setup = conan_setup + ' -s os=Linux -s compiler.libcxx=libstdc++'
     else:
         conan_setup = conan_setup + ' -s os=Windows'
 
@@ -112,10 +112,7 @@ def main():
            cmake_command = cmake_command + ' -DCODE_COVERAGE=ON'
 
     if cmd_line_arg_parser.get_compiler().lower() == 'clang':
-        if platform == 'linux' or platform == 'linux2':
-            cmake_command = cmake_command + ' -DCMAKE_CXX_COMPILER=clang++'
-        elif platform == 'win32':
-            cmake_command = cmake_command + ' -T ClangCL'
+            cmake_command = cmake_command + ' -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang'
 
     if platform == 'win32':
         cmake_command = cmake_command + ' -A x64'
