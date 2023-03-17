@@ -13,3 +13,7 @@ target_link_libraries(3dTetris
     PRIVATE
       ${CONAN_LIBS}
 )
+
+add_subdirectory(main)
+add_subdirectory(game)
+add_subdirectory(logger)
