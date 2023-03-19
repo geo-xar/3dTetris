@@ -17,7 +17,9 @@ using modern C++ and introducing unit tests.
 
  - [X] Create basic components class diagram
  - [X] Create basic sequence diagram
- - [ ] Create Game class and tests
+ - [X] Create Logger class and tests
+ - [X] Create Game class and tests
+ - [ ] Create Controller class and tests
 
 ## Class diagram
 
