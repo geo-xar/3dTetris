@@ -97,7 +97,7 @@ def main():
         conan_setup = conan_setup + ' --profile default'
 
     if platform == 'linux' or platform == 'linux2':
-        conan_setup = conan_setup + ' -s os=Linux -s compiler.libcxx=libstdc++'
+        conan_setup = conan_setup + ' -s os=Linux -s compiler.libcxx=libstdc++11'
     else:
         conan_setup = conan_setup + ' -s os=Windows'
 
