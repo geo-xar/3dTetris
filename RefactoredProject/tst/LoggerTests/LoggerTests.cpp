@@ -1,13 +1,27 @@
 #include "gtest/gtest.h"
+#include "ILogger.h"
+#include "LoggerFactory.h"
 
-class LoggerTests final
+class LoggerTests : public ::testing::Test
 {
 public:
+    LoggerTests()
+    {
+        _logger = LoggerFactory::createLogger();
+    }
+
+    ILoggerPtrU _logger;
 };
 
-TEST(LoggerTests, firstLoggerTest)
+TEST_F(LoggerTests, firstLoggerTest)
 {
+    const std::string logEntry{ "Hello World" };
+    _logger->log(logEntry);
 
+    const std::string actualLogEntry((std::istreambuf_iterator<char>(_logger->flush().rdbuf())),
+        std::istreambuf_iterator<char>());
+
+    EXPECT_EQ(actualLogEntry, logEntry + "\n");
 }
 
 int main(int argc, char** argv)

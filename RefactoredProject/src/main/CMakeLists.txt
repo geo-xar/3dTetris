@@ -1,10 +1,10 @@
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(new3dtetris main.cpp)
+add_executable(New3dTetris main.cpp)
 
-target_link_libraries(new3dtetris
+target_link_libraries(New3dTetris
   PRIVATE
-    logger
-    game
+    Logger
+    Game
 )

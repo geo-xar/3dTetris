@@ -10,6 +10,6 @@ add_executable(LoggerTests
 
 target_link_libraries(LoggerTests
     PRIVATE
-      logger
+      Logger
       ${CONAN_LIBS}
 )

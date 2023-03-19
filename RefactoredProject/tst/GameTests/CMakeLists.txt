@@ -10,7 +10,7 @@ add_executable(GameTests
 
 target_link_libraries(GameTests
     PRIVATE
-      game
-      logger
+      Game
+      Logger
       ${CONAN_LIBS}
 )
