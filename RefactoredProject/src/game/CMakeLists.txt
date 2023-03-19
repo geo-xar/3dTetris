@@ -1,6 +1,3 @@
-# Copyright 2023 by Georgios Charitos.
-# All rights reserved.
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -16,4 +13,9 @@ target_sources(game
 target_include_directories(game
   PUBLIC
     "${CMAKE_CURRENT_LIST_DIR}/include"
+)
+
+target_link_libraries(game
+  PRIVATE
+    logger
 )
