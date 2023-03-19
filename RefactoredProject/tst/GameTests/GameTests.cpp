@@ -1,6 +1,11 @@
 #include "gtest/gtest.h"
 
-TEST(dummy, 3dTetrisTests)
+class GameTests final
+{
+public:
+};
+
+TEST(GameTests, firstGameTest)
 {
 
 }
