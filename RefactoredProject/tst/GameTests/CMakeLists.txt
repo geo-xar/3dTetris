@@ -12,5 +12,6 @@ target_link_libraries(GameTests
     PRIVATE
       Game
       Logger
+      TestUtils
       ${CONAN_LIBS}
 )
