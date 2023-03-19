@@ -25,6 +25,6 @@ private:
         PAUSED_AND_HELP
     };
 
-    State _state;
-    ILogger& _logger;
+    [[maybe_unused]] State _state;
+    [[maybe_unused]] ILogger& _logger;
 };
