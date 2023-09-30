@@ -1,6 +1,3 @@
-# Copyright 2023 by Georgios Charitos.
-# All rights reserved.
-
 from os import chdir
 from os import path
 from os import system
@@ -87,10 +84,10 @@ def main():
 
     chdir(f"{build_directory}")
 
-    conan_setup = 'conan install -s arch=x86_64'
+    conan_setup = 'conan install -s arch=x86_64 --output-folder=.'
 
     if cmd_line_arg_parser.get_compiler().lower() == 'clang':
-        conan_setup = conan_setup + ' -s compiler=clang -s compiler.version=15'
+        conan_setup = conan_setup + ' -s compiler=clang -s compiler.version=16'
         if platform == 'linux' or platform == 'linux2':
             conan_setup = conan_setup + ' -e CC=/usr/bin/clang -e CXX=/usr/bin/clang++'
     else:

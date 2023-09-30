@@ -1,8 +1,9 @@
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
+
+find_package(GTest REQUIRED CONFIG)
 
 add_executable(GameTests
     GameTests.cpp
@@ -13,5 +14,6 @@ target_link_libraries(GameTests
       Game
       Logger
       TestUtils
-      ${CONAN_LIBS}
+      GTest::gtest
+      GTest::gmock
 )
