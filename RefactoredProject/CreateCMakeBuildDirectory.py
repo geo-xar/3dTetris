@@ -124,7 +124,7 @@ def main():
     else:
         conan_setup = conan_setup + ' -s os=Windows'
 
-    conan_setup = conan_setup + f" --build=missing -s build_type={config} ../"
+    conan_setup = conan_setup + f" --build=missing -s:b build_type={config} -s:h build_type={config} ../"
 
     system(conan_setup)
 
