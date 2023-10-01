@@ -84,21 +84,27 @@ class BuildConanManager:
         self.config = config
         self.compiler = compiler
         self.profile_default = profile_default
-        self.settings = {'arch':'x86_64'}
+        self.output_folder = '.'
+        self.settings = {'arch':'x86_64', 'build_type':f"{config}", 'compiler':f"{compiler}", 'compiler.cppstd':'20', 'compiler.runtime':'dynamic'}
+
         if platform == 'linux':
             self.settings['os'] = 'Linux'
             self.settings['compiler.libcxx'] = 'libstdc++11'
         else:
             self.settings['os'] = 'Windows'
-        self.output_folder = '.'
+
+        if compiler == 'msvc':
+            self._get_msvc_config()
+
+    def _get_msvc_config(self):
+        self.settings['compiler.version'] = '193'
 
     def install(self):
         conan_install = 'conan install'
         for key,value in self.settings.items():
-            conan_install += f" -s {key}={value}"
+            conan_install += f" -s:b {key}={value} -s:h {key}={value}"
         conan_install += f" --output-folder={self.output_folder}"
-        conan_install += ' -pr:h default -pr:b default'
-        conan_install += f" --build=missing -s:b build_type={self.config} -s:h build_type={self.config} ../"
+        conan_install += f" --build=missing ../"
         return conan_install
 
 
