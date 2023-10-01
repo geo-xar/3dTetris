@@ -75,6 +75,33 @@ class BuildDirectoryManager:
         else:
             self.build_dir_exists = False
 
+
+class BuildConanManager:
+    """
+    The build conan manager.
+    """
+    def __init__(self, config: str, compiler: str, profile_default: bool = True):
+        self.config = config
+        self.compiler = compiler
+        self.profile_default = profile_default
+        self.settings = {'arch':'x86_64'}
+        if platform == 'linux':
+            self.settings['os'] = 'Linux'
+            self.settings['compiler.libcxx'] = 'libstdc++11'
+        else:
+            self.settings['os'] = 'Windows'
+        self.output_folder = '.'
+
+    def install(self):
+        conan_install = 'conan install'
+        for key,value in self.settings.items():
+            conan_install += f" -s {key}={value}"
+        conan_install += f" --output-folder={self.output_folder}"
+        conan_install += ' -pr:h default -pr:b default'
+        conan_install += f" --build=missing -s:b build_type={self.config} -s:h build_type={self.config} ../"
+        return conan_install
+
+
 def main():
     """The main application that parses the given command line arguments and creates the build directory."""
     cmd_line_arg_parser = CmdLineArgParser()
@@ -115,18 +142,9 @@ def main():
 
     chdir(f"{build_dir}")
 
-    conan_setup = 'conan install -s arch=x86_64 --output-folder=.'
+    build_conan_manager = BuildConanManager(config, compiler)
 
-    conan_setup = conan_setup + ' -pr default -pr:b default'
-
-    if platform == 'linux' or platform == 'linux2':
-        conan_setup = conan_setup + ' -s os=Linux -s compiler.libcxx=libstdc++11'
-    else:
-        conan_setup = conan_setup + ' -s os=Windows'
-
-    conan_setup = conan_setup + f" --build=missing -s:b build_type={config} -s:h build_type={config} ../"
-
-    system(conan_setup)
+    system(build_conan_manager.install())
 
     cmake_command = f"cmake ../ -DCMAKE_BUILD_TYPE={config}"
 
