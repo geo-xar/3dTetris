@@ -53,3 +53,6 @@ cmake_install.cmake
 Coverage/
 CoverageReport*
 LastCoverageResults.log
+
+# Conan
+CMakeUserPresets.json
