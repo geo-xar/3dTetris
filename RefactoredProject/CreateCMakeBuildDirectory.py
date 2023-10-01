@@ -102,6 +102,23 @@ class BuildConanManager:
         return conan_install
 
 
+def get_user_input(build_dir: str):
+    """Get user wish given an existing build directory."""
+    input_str = f"The {build_dir} directory already exists. Do you wish to:\n1.Delete it and generate it from scratch\n2.Do nothing\nPlease choose between 1 and 2\n"
+    user_input = str(input(input_str))
+
+    while (user_input != '1' and user_input != '2'):
+        user_input = str(input(input_str))
+
+    if user_input == '1':
+        if platform == 'linux':
+            system(f"rm -rf {build_dir}")
+        elif platform == 'win32':
+            system(f"rmdir /s /q {build_dir}")
+    else:
+        exit(f"The directory: {build_dir} will remain intact.\n")
+
+
 def main():
     """The main application that parses the given command line arguments and creates the build directory."""
     cmd_line_arg_parser = CmdLineArgParser()
@@ -120,25 +137,9 @@ def main():
     build_dir_exists = build_dir_manager.build_dir_exists
 
     if build_dir_exists:
-        input_str = f"The {build_dir} directory already exists. Do you wish to:\n1.Delete it and generate it from scratch\n2.Do nothing\nPlease choose between 1 and 2\n"
-        user_input = str(input(input_str))
+        get_user_input(build_dir)
 
-        while (user_input != '1' and user_input != '2'):
-            user_input = str(input(input_str))
-
-        if user_input == '1':
-            if platform == 'linux' or platform == 'linux2':
-                system(f"rm -rf {build_dir}")
-            elif platform == 'win32':
-                system(f"rmdir /s /q {build_dir}")
-
-            build_dir_exists = False
-
-        else:
-            exit(f"The directory: {build_dir} will remain intact.\n")
-
-    if not build_dir_exists:
-        system(f"mkdir {build_dir}")
+    system(f"mkdir {build_dir}")
 
     chdir(f"{build_dir}")
 
