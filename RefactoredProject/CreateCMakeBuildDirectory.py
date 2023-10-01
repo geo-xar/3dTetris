@@ -102,6 +102,34 @@ class BuildConanManager:
         return conan_install
 
 
+class BuildCmakeManager:
+    """
+    The build cmake manager.
+    """
+    def __init__(self, config: str, compiler: str):
+        self.config = config
+        self.compiler = compiler
+
+    def configure(self):
+        cmake_command = f"cmake ../ -DCMAKE_BUILD_TYPE={self.config}"
+
+        # Code coverage is enabled on Debug configuration on Linux.
+        if self.config == 'Debug' and platform == 'linux':
+            cmake_command += ' -DCODE_COVERAGE=ON'
+
+        if self.compiler == 'clang':
+            cmake_command += ' -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang'
+
+        if platform == 'win32':
+            cmake_command += ' -A x64'
+
+        return cmake_command
+
+    def build(self):
+        cmake_command = f"cmake --build . --config {self.config}"
+        return cmake_command
+
+
 def get_user_input(build_dir: str):
     """Get user wish given an existing build directory."""
     input_str = f"The {build_dir} directory already exists. Do you wish to:\n1.Delete it and generate it from scratch\n2.Do nothing\nPlease choose between 1 and 2\n"
@@ -140,31 +168,16 @@ def main():
         get_user_input(build_dir)
 
     system(f"mkdir {build_dir}")
-
     chdir(f"{build_dir}")
 
     build_conan_manager = BuildConanManager(config, compiler)
-
     system(build_conan_manager.install())
 
-    cmake_command = f"cmake ../ -DCMAKE_BUILD_TYPE={config}"
+    build_cmake_manager = BuildCmakeManager(config, compiler)
+    system(build_cmake_manager.configure())
 
-    # Code coverage is enabled on Debug configuration on Linux.
-    if config == 'Debug' and platform == 'linux':
-        cmake_command = cmake_command + ' -DCODE_COVERAGE=ON'
-
-    if compiler == 'clang':
-        cmake_command = cmake_command + ' -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang'
-
-    if platform == 'win32':
-        cmake_command = cmake_command + ' -A x64'
-
-    # Execute CMake command to generate build directory.
-    system(cmake_command)
-
-    # Optionally build code (enabled by default).
     if cmd_line_arg_parser.do_build():
-        build_result = system(f"cmake --build . --config {config}")
+        build_result = system(build_cmake_manager.build())
         if (build_result):
             exit(f"Build failed, error code: {build_result}")
 
