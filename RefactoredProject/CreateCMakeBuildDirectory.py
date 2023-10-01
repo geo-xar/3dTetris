@@ -95,9 +95,17 @@ class BuildConanManager:
 
         if compiler == 'msvc':
             self._get_msvc_config()
+        elif compiler == 'clang':
+            self._get_clang_config()
 
     def _get_msvc_config(self):
         self.settings['compiler.version'] = '193'
+
+    def _get_clang_config(self):
+        self.settings['compiler.version'] = '16'
+        self.settings['compiler.runtime_version'] = 'v143'
+        #self.settings['tools.build:compiler_executables'] = {'c': f"{{clang}}", 'cpp': f"{{clang++}}"}
+        self.settings['tools.cmake.cmaketoolchain:cmake_flags_init'] = ['-nostdlib']
 
     def install(self):
         conan_install = 'conan install'
@@ -159,8 +167,6 @@ def main():
     cmd_line_arg_parser.parse()
 
     compiler = cmd_line_arg_parser.get_compiler().lower()
-    if compiler == 'clang' and platform == 'win32':
-        exit(f"clang is not supported on Windows")
     print(f"Build compiler is {compiler}")
 
     config = cmd_line_arg_parser.get_config()
@@ -178,6 +184,7 @@ def main():
 
     build_conan_manager = BuildConanManager(config, compiler)
     system(build_conan_manager.install())
+    exit(1)
 
     build_cmake_manager = BuildCmakeManager(config, compiler)
     system(build_cmake_manager.configure())
