@@ -97,7 +97,6 @@ class ConanManager:
     def __init__(self, config: str, compiler: str, profile_default: bool = True):
         self.config = config
         self.compiler = compiler
-        self.profile_default = profile_default
         self.output_folder = '.'
         self.settings = {'arch': 'x86_64', 'build_type': f"{config}", 'compiler': f"{compiler}",
                          'compiler.cppstd': '20', 'compiler.runtime': 'dynamic'}
@@ -110,6 +109,9 @@ class ConanManager:
 
         if compiler == 'msvc':
             self._get_msvc_config()
+
+        if profile_default:
+            subprocess.run("conan profile detect --force", check=True)
 
     def _get_msvc_config(self):
         self.settings['compiler.version'] = '193'
