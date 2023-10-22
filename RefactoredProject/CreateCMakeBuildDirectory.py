@@ -1,6 +1,7 @@
-from os import chdir, path, system, getcwd, makedirs
+from os import chdir, path, getcwd, makedirs
 from sys import exit, platform
 import argparse
+import subprocess
 
 
 def is_valid_configuration(configuration: str):
@@ -162,9 +163,9 @@ def get_user_input(build_dir: str):
 
     if user_input == '1':
         if platform == 'linux':
-            system(f"rm -rf {build_dir}")
+            subprocess.run(["rm", "-rf", f"{build_dir}"], shell=True, check=True)
         elif platform == 'win32':
-            system(f"rmdir /s /q {build_dir}")
+            subprocess.run(["rmdir", "/s", "/q", f"{build_dir}"], shell=True, check=True)
     else:
         exit(f"The directory: {build_dir} will remain intact.\n")
 
@@ -193,15 +194,13 @@ def main():
     chdir(f"{build_dir}")
 
     conan_manager = ConanManager(config, compiler)
-    system(conan_manager.install())
+    subprocess.run(conan_manager.install(), check=True)
 
     cmake_manager = CmakeManager(config, compiler)
-    system(cmake_manager.configure())
+    subprocess.run(cmake_manager.configure(), check=True)
 
     if cmd_line_arg_parser.do_build():
-        build_result = system(cmake_manager.build())
-        if build_result:
-            exit(f"Build failed, error code: {build_result}")
+        subprocess.run(cmake_manager.build(), check=True)
 
 
 if __name__ == "__main__":
