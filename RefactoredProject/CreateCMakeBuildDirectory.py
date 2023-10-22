@@ -109,6 +109,9 @@ class ConanManager:
 
         if compiler == 'msvc':
             self._get_msvc_config()
+        elif compiler == 'clang':
+            self.settings['compiler.version'] = '16'
+            self.settings['compiler.runtime_version'] = 'v143'
 
         if profile_default:
             subprocess.run("conan profile detect --force", check=True)
@@ -120,6 +123,8 @@ class ConanManager:
         conan_install = 'conan install'
         for key, value in self.settings.items():
             conan_install += f" -s:b {key}={value} -s:h {key}={value}"
+        if self.compiler == 'clang':
+            conan_install += " --profile=../clang-profile.txt"
         conan_install += f" --output-folder={self.output_folder}"
         conan_install += f" --build=missing ../"
         return conan_install
@@ -140,9 +145,6 @@ class CmakeManager:
         # Code coverage is enabled on Debug configuration on Linux.
         if self.config == 'Debug' and platform == 'linux':
             cmake_command += ' -DCODE_COVERAGE=ON'
-
-        if self.compiler == 'clang':
-            cmake_command += ' -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang'
 
         if platform == 'win32':
             cmake_command += ' -A x64'
@@ -178,8 +180,6 @@ def main():
     cmd_line_arg_parser.parse()
 
     compiler = cmd_line_arg_parser.get_compiler().lower()
-    if compiler == 'clang' and platform == 'win32':
-        exit(f"clang is not supported on Windows")
     print(f"Build compiler is {compiler}")
 
     config = cmd_line_arg_parser.get_config()
