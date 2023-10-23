@@ -113,7 +113,6 @@ class ConanManager:
             self._get_msvc_config()
         elif compiler == 'clang':
             self.settings['compiler.version'] = '16'
-            self.settings['compiler.runtime_version'] = 'v143'
 
         if profile_default:
             subprocess.run("conan profile detect --force", check=True, shell=True)
@@ -150,6 +149,9 @@ class CmakeManager:
 
         if platform == 'win32':
             cmake_command += ' -A x64'
+
+        if self.compiler == 'clang':
+            cmake_command += ' -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++'
 
         return cmake_command
 
