@@ -2,6 +2,7 @@ from os import chdir, path, getcwd, makedirs
 from sys import exit, platform
 import argparse
 import subprocess
+import shutil
 
 
 def is_valid_configuration(configuration: str):
@@ -22,7 +23,7 @@ def is_valid_compiler(compiler: str):
     Check if given compiler is valid.
     :param compiler
     """
-    valid_compiler = ['msvc', 'gcc', 'g++', 'gnu', 'clang']
+    valid_compiler = ['msvc', 'gcc', 'clang']
     input_compiler = compiler.lower()
     if input_compiler in valid_compiler:
         return input_compiler
@@ -52,7 +53,7 @@ class CmdLineArgParser:
         if platform == 'win32':
             self.parser.set_defaults(compiler='msvc')
         else:
-            self.parser.set_defaults(compiler='g++')
+            self.parser.set_defaults(compiler='gcc')
         self.parser.add_argument('--with-build', dest='build', help='Build code after generating build directory')
         self.parser.set_defaults(build=True)
         self.args = self.parser.parse_args()
@@ -99,13 +100,14 @@ class ConanManager:
         self.compiler = compiler
         self.output_folder = '.'
         self.settings = {'arch': 'x86_64', 'build_type': f"{config}", 'compiler': f"{compiler}",
-                         'compiler.cppstd': '20', 'compiler.runtime': 'dynamic'}
+                         'compiler.cppstd': '20'}
 
         if platform == 'linux':
             self.settings['os'] = 'Linux'
             self.settings['compiler.libcxx'] = 'libstdc++11'
-        else:
+        elif platform == 'win32':
             self.settings['os'] = 'Windows'
+            self.settings['compiler.runtime'] = 'dynamic'
 
         if compiler == 'msvc':
             self._get_msvc_config()
@@ -114,7 +116,7 @@ class ConanManager:
             self.settings['compiler.runtime_version'] = 'v143'
 
         if profile_default:
-            subprocess.run("conan profile detect --force", check=True)
+            subprocess.run("conan profile detect --force", check=True, shell=True)
 
     def _get_msvc_config(self):
         self.settings['compiler.version'] = '193'
@@ -166,10 +168,7 @@ def get_user_input(build_dir: str):
         user_input = str(input(input_str))
 
     if user_input == '1':
-        if platform == 'linux':
-            subprocess.run(["rm", "-rf", f"{build_dir}"], shell=True, check=True)
-        elif platform == 'win32':
-            subprocess.run(["rmdir", "/s", "/q", f"{build_dir}"], shell=True, check=True)
+        shutil.rmtree(build_dir)
     else:
         exit(f"The directory: {build_dir} will remain intact.\n")
 
@@ -196,13 +195,13 @@ def main():
     chdir(f"{build_dir}")
 
     conan_manager = ConanManager(config, compiler)
-    subprocess.run(conan_manager.install(), check=True)
+    subprocess.call(conan_manager.install(), shell=True)
 
     cmake_manager = CmakeManager(config, compiler)
-    subprocess.run(cmake_manager.configure(), check=True)
+    subprocess.run(cmake_manager.configure(), check=True, shell=True)
 
     if cmd_line_arg_parser.do_build():
-        subprocess.run(cmake_manager.build(), check=True)
+        subprocess.run(cmake_manager.build(), check=True, shell=True)
 
 
 if __name__ == "__main__":
