@@ -1,10 +1,10 @@
 #include "Game.h"
 
-Game::Game(ILogger& logger)
+Game::Game(ILogger& logger, IGrid& grid)
 : _state{State::STOPPED}
 , _logger{logger}
+, _grid{grid}
 {
-
 }
 
 void Game::start()

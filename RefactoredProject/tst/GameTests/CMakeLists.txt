@@ -13,6 +13,7 @@ target_link_libraries(GameTests
     PRIVATE
       Game
       Logger
+      Grid
       TestUtils
       GTest::gtest
       GTest::gmock

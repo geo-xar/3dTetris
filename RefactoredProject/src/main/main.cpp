@@ -1,9 +1,11 @@
-#include <LoggerFactory.h>
-#include <Game.h>
+#include "Game.h"
+#include "GridFactory.h"
+#include "LoggerFactory.h"
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
+int main(int argc, char** argv)
 {
     auto logger = LoggerFactory::createLogger();
-    Game game{*logger};
+    auto grid = GridFactory::createGrid();
+    Game game{*logger, *grid};
     return 0;
 }

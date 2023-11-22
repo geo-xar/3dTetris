@@ -1,26 +1,28 @@
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-project(Game)
+project(Grid)
 
-add_library(Game STATIC)
+add_library(Grid STATIC)
 
-target_sources(Game
+target_sources(Grid
   PUBLIC
-    include/Game.h
+    include/GridFactory.h
+    include/IGrid.h
   PRIVATE
-    Game.cpp
+    Grid.cpp
+    Grid.h
+    GridFactory.cpp
 )
 
 target_include_directories(
-  Game
+  Grid
   PUBLIC
     "${CMAKE_CURRENT_LIST_DIR}/include"
 )
 
 target_link_libraries(
-  Game
+  Grid
   PRIVATE
-    Grid
-    Logger
+    FreeGLUT::freeglut_static
 )

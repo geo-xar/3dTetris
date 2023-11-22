@@ -7,11 +7,13 @@ find_package(FreeGLUT REQUIRED CONFIG)
 
 add_executable(3dTetris 3dTetris.cpp)
 
-target_link_libraries(3dTetris
-    PRIVATE
-      FreeGLUT::freeglut_static
+target_link_libraries(
+  3dTetris
+  PRIVATE
+    FreeGLUT::freeglut_static
 )
 
-add_subdirectory(main)
 add_subdirectory(game)
+add_subdirectory(grid)
 add_subdirectory(logger)
+add_subdirectory(main)
