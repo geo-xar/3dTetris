@@ -11,4 +11,5 @@ target_link_libraries(
     Game
     Grid
     Logger
+    Main-window
 )

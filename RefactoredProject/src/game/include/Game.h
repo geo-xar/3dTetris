@@ -1,12 +1,13 @@
 #pragma once
 
-#include <ILogger.h>
-#include <IGrid.h>
+#include "ILogger.h"
+#include "IGrid.h"
+#include "IMainWindow.h"
 
 class Game final
 {
 public:
-    Game(ILogger& logger, IGrid& grid);
+    Game(ILogger& logger, IGrid& grid, IMainWindow& mainWindow);
 
     void start();
     void stop();
@@ -29,4 +30,5 @@ private:
     State _state;
     ILogger& _logger;
     IGrid& _grid;
+    IMainWindow& _mainWindow;
 };

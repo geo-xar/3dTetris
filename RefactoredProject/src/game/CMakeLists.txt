@@ -23,4 +23,5 @@ target_link_libraries(
   PRIVATE
     Grid
     Logger
+    Main-window
 )

@@ -9,12 +9,14 @@ add_executable(GameTests
     GameTests.cpp
 )
 
-target_link_libraries(GameTests
-    PRIVATE
-      Game
-      Logger
-      Grid
-      TestUtils
-      GTest::gtest
-      GTest::gmock
+target_link_libraries(
+  GameTests
+  PRIVATE
+    Game
+    Grid
+    GTest::gmock
+    GTest::gtest
+    Logger
+    Main-window
+    TestUtils
 )

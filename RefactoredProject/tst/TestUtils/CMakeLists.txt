@@ -9,6 +9,7 @@ target_sources(TestUtils
   INTERFACE
     GridMock.h
     LoggerMock.h
+    MainWindowMock.h
 )
 
 target_include_directories(
